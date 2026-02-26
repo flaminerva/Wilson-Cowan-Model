@@ -167,33 +167,36 @@ We classify each fixed point using the trace $\tau = \text{tr}(J)$, determinant 
 For our 3 fixed points:
 
 - **(0, 0):**
-$$
-J = \begin{pmatrix} -0.650 & -0.156
-\\ 0.115 & -0.597 \end{pmatrix}
-$$
 
-	$$
-\tau = -1.247, \quad \Delta = 0.406, \quad \tau^2 - 4\Delta = 1.555 - 1.624 = -0.069 < 0
-$$
-	We have $\tau^2 - 4\Delta < 0$. This is a **stable spiral**.
-	
+  $$
+  J = \begin{pmatrix} -0.650 & -0.156 \\ 0.115 & -0.597 \end{pmatrix}
+  $$
+
+  $$
+  \tau = -1.247, \quad \Delta = 0.406, \quad \tau^2 - 4\Delta = 1.555 - 1.624 = -0.069 < 0
+  $$
+  
+  We have $\tau^2 - 4\Delta < 0$. This is a **stable spiral**.
 
 - **(≈0.34, 0.17):**
-	$$
-J = \begin{pmatrix} 1.535 & -1.127 \\
- 1.000 & -1.347 \end{pmatrix}
+
   $$
-	
-	We have $\Delta = -0.941 < 0$. This is a **saddle point**.
-	
+  J = \begin{pmatrix} 1.535 & -1.127 \\ 1.000 & -1.347 \end{pmatrix}
+  $$
+  
+  We have $\Delta = -0.941 < 0$. This is a **saddle point**.
 
 - **(≈0.94, 0.68):**
-	$$
-J = \begin{pmatrix} -0.700 & -0.133 \\
- 1.422 & -1.703 \end{pmatrix}
+
   $$
-	
-	We have $\Delta = 1.381 > 0$, $\tau = -2.403 < 0$, and $\tau^2 - 4\Delta = 0.250 > 0$. This is a **stable node**.
+  J = \begin{pmatrix} -0.700 & -0.133 \\ 1.422 & -1.703 \end{pmatrix}
+  $$
+  
+  $$
+  \Delta = 1.381 > 0, \quad \tau = -2.403 < 0, \quad \tau^2 - 4\Delta = 0.250 > 0
+  $$
+  
+  This is a **stable node**.
 
 The system with default parameters ($I^{ext}_E = 0$) is therefore **bistable**.
 (In a [dynamical system](https://en.wikipedia.org/wiki/Dynamical_system "Dynamical system"), **bistability** means the system has two [stable equilibrium states](https://en.wikipedia.org/wiki/Stability_theory "Stability theory") **bistable structure** can be resting in either of two states.)
