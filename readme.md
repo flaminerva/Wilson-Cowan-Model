@@ -2,6 +2,8 @@
 
 In [computational neuroscience](https://en.wikipedia.org/wiki/Computational_neuroscience "Computational neuroscience"), the **Wilson-Cowan model** ([Hugh R. Wilson](https://en.wikipedia.org/w/index.php?title=H.R._Wilson&action=edit&redlink=1 "H.R. Wilson (page does not exist)") & [Jack D. Cowan](https://en.wikipedia.org/wiki/Jack_D._Cowan "Jack D. Cowan")) describes the dynamics of interactions between populations of very simple excitatory and inhibitory model [neurons](https://en.wikipedia.org/wiki/Neuron "Neuron"). It is a mean-field model that tracks the **proportion of active neurons** in each population over time.
 
+[^1]![[fnsys-16-723237-g001.webp]]
+
 $$\tau_E \frac{dr_E}{dt} = -r_E + F_E(w_{EE} \cdot r_E - w_{EI} \cdot r_I + I^{ext}_E)$$
 
 $$\tau_I \frac{dr_I}{dt} = -r_I + F_I(w_{IE} \cdot r_E - w_{II} \cdot r_I + I^{ext}_I)$$
@@ -43,22 +45,22 @@ The correction term $-\frac{1}{1 + e^{a\theta}}$ ensures $F(0) = 0$ (no input yi
 - $I^{ext}_E$ — external input current to the excitatory population (primary control parameter for bifurcation analysis).
 - $I^{ext}_I$ — external input current to the inhibitory population (typically fixed at 0).
 
-### Classic Parameter Values
+### Parameter Values
 
-|Parameter|Value|Description|
-|---|---|---|
-|$\tau_E$|1.0 ms|Excitatory time constant|
-|$\tau_I$|2.0 ms|Inhibitory time constant|
-|$a_E$|1.2|Excitatory gain|
-|$a_I$|1.0|Inhibitory gain|
-|$\theta_E$|2.8|Excitatory threshold|
-|$\theta_I$|4.0|Inhibitory threshold|
-|$w_{EE}$|9.0|E → E weight|
-|$w_{EI}$|4.0|I → E weight|
-|$w_{IE}$|13.0|E → I weight|
-|$w_{II}$|11.0|I → I weight|
-|$I^{ext}_E$|0.0|External input to E (sweep this)|
-|$I^{ext}_I$|0.0|External input to I|
+| Parameter   | Value  | Description                                              |
+| ----------- | ------ | -------------------------------------------------------- |
+| $\tau_E$    | 1.0 ms | Average synaptic time constant for excitatory population |
+| $\tau_I$    | 2.0 ms | Average synaptic time constant for inhibitory population |
+| $a_E$       | 1.2    | Excitatory gain                                          |
+| $a_I$       | 1.0    | Inhibitory gain                                          |
+| $\theta_E$  | 2.8    | Excitatory threshold                                     |
+| $\theta_I$  | 4.0    | Inhibitory threshold                                     |
+| $w_{EE}$    | 9.0    | Strength of self-excitatory feedback                     |
+| $w_{EI}$    | 4.0    | Strength of connections between _E–I_                    |
+| $w_{IE}$    | 13.0   | Strength of connections between _I-E_                    |
+| $w_{II}$    | 11.0   | Strength of self-inhibitory feedback                     |
+| $I^{ext}_E$ | 0.0    | External input to excitatory population (sweep this)     |
+| $I^{ext}_I$ | 0.0    | External input to inhibitory population                  |
 
 These values are from the Neuromatch Academy computational neuroscience curriculum.
 
@@ -193,18 +195,18 @@ Note that after sweeping $I^{ext}_E$, We only get the stable 1 fixed point, why?
 --
 Under the NMA default parameters, the system **cannot produce oscillations**. Sweeping $I^{ext}_E$ reveals that the unique remaining fixed point after the saddle-node bifurcation always lies in the sigmoid saturation region ($F'_E \approx 0$), making the Jacobian trace $\tau$ permanently negative. The Hopf bifurcation condition $\tau > 0$ is never met.
 
-This is not a limitation of the Wilson-Cowan model itself, but a consequence of the parameter choice. The NMA parameters are designed to demonstrate **bistability** (working memory), not oscillations. Comparing with the parameters from [Wilson and Cowan (1972)](https://doi.org/10.1016/S0006-3495\(72\)86068-5) used in [Li et al. (2022)](https://doi.org/10.3389/fnsys.2022.723237) and [Jadi and Sejnowski (2014)](https://doi.org/10.1109/JPROC.2014.2313113) for gamma oscillation research:
+This is not a limitation of the Wilson-Cowan model itself, but a consequence of the parameter choice. The NMA parameters are designed to demonstrate **bistability** (working memory), not oscillations.  Comparing with the parameters used in [Li et al. (2022)](https://doi.org/10.3389/fnsys.2022.723237) (Table 1, based on [Wilson and Cowan (1972)](https://doi.org/10.1016/S0006-3495\(72\)86068-5) and [Jadi and Sejnowski (2014)](https://doi.org/10.1109/JPROC.2014.2313113)) for gamma oscillation research:
 
-|Parameter|NMA (bistability)|Original (oscillation)|
-|---|---|---|
-|$w_{EE}$|9|16|
-|$w_{EI}$|4|26|
-|$w_{IE}$|13|20|
-|$w_{II}$|11|1|
-|$\tau_E$ (ms)|1|20|
-|$\tau_I$ (ms)|2|10|
-|$\theta_E, \theta_I$|2.8, 4.0|5, 20|
-|$I^{ext}_E, I^{ext}_I$|0, 0|2, 7|
+| Parameter              | NMA (bistability) | Table1 (oscillation) |
+| ---------------------- | ----------------- | -------------------- |
+| $w_{EE}$               | 9                 | 16                   |
+| $w_{EI}$               | 4                 | 26                   |
+| $w_{IE}$               | 13                | 20                   |
+| $w_{II}$               | 11                | 1                    |
+| $\tau_E$ (ms)          | 1                 | 20                   |
+| $\tau_I$ (ms)          | 2                 | 10                   |
+| $\theta_E, \theta_I$   | 2.8, 4.0          | 5, 20                |
+| $I^{ext}_E, I^{ext}_I$ | 0, 0              | 2, 7                 |
 
 Regarding the influence of parameters, we refer to the following papers rather than reproducing their analysis:
 
@@ -230,3 +232,5 @@ Regarding the influence of parameters, we refer to the following papers rather t
 6. **Li, D., Liu, S. & Wang, J. (2022).** Bidirectionally regulating gamma oscillations in Wilson-Cowan model by self-feedback loops: a computational study. _Frontiers in Systems Neuroscience_, 16, 723237. doi: [10.3389/fnsys.2022.723237](https://doi.org/10.3389/fnsys.2022.723237)
     
 7. **[Neuromatch Academy — Computational Neuroscience, W2D4: Dynamic Networks](https://compneuro.neuromatch.io/tutorials/W2D4_DynamicNetworks/student/W2D4_Tutorial2.html)**
+
+[^1]: Schematic of the Wilson-Cowan model. _E_ represents the excitatory populations, _I_ stands for the inhibitory populations, the red arrows indicate the excitatory projections and blue arrows show the inhibitory projections, _i__I_ is the external inputs of the _I_ populations, and _i__E_ is the external inputs of the _E_ populations.[Li et al. (2022)](https://doi.org/10.3389/fnsys.2022.723237)
