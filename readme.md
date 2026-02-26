@@ -169,7 +169,8 @@ For our 3 fixed points:
 **(0, 0):**
 
 $$
-J = \begin{pmatrix} -0.650 & -0.156 \\ 0.115 & -0.597 \end{pmatrix}
+J = \begin{pmatrix} -0.650 & -0.156 \\
+0.115 & -0.597 \end{pmatrix}
 $$
 
 $$
@@ -183,7 +184,8 @@ We have $\tau^2 - 4\Delta < 0$. This is a **stable spiral**.
 **(≈0.34, 0.17):**
 
 $$
-J = \begin{pmatrix} 1.535 & -1.127 \\ 1.000 & -1.347 \end{pmatrix}
+J = \begin{pmatrix} 1.535 & -1.127 \\
+1.000 & -1.347 \end{pmatrix}
 $$
 
 We have $\Delta = -0.941 < 0$. This is a **saddle point**.
@@ -193,7 +195,8 @@ We have $\Delta = -0.941 < 0$. This is a **saddle point**.
 **(≈0.94, 0.68):**
 
 $$
-J = \begin{pmatrix} -0.700 & -0.133 \\ 1.422 & -1.703 \end{pmatrix}
+J = \begin{pmatrix} -0.700 & -0.133 \\
+1.422 & -1.703 \end{pmatrix}
 $$
 
 $$
