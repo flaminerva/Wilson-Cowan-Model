@@ -142,15 +142,21 @@ $$J = \begin{pmatrix}
 
 We solve the partial derivative and obtain
 
-$$J = \begin{pmatrix} \frac{1}{\tau_E}(-1 + w_{EE} \cdot F'_E) & \frac{1}{\tau_E}(-w_{EI} \cdot F'_E)\\
-\ \frac{1}{\tau_I}(w_{IE} \cdot F'_I) & \frac{1}{\tau_I}(-1 - w_{II} \cdot F'_I) \end{pmatrix}$$
+$$
+J = \begin{pmatrix} \frac{1}{\tau_E}(-1 + w_{EE} \cdot F'_E) & \frac{1}{\tau_E}(-w_{EI} \cdot F'_E)\\
+\ \frac{1}{\tau_I}(w_{IE} \cdot F'_I) & \frac{1}{\tau_I}(-1 - w_{II} \cdot F'_I) \end{pmatrix}
+$$
 
 in which 
-$$F'(x) = a \cdot (F(x)+c)(1 - F(x) - c), \quad c = \frac{1}{1+e^{a\theta}}$$
+$$
+F'(x) = a \cdot (F(x)+c)(1 - F(x) - c), \quad c = \frac{1}{1+e^{a\theta}}
+$$
 
 Note that $F'$ is evaluated at the sigmoid input, not at $r_E$ or $r_I$ directly:
 
-$$u_E = w_{EE} r_E - w_{EI} r_I + I^{ext}_E, \quad u_I = w_{IE} r_E - w_{II} r_I + I^{ext}_I$$
+$$
+u_E = w_{EE} r_E - w_{EI} r_I + I^{ext}_E, \quad u_I = w_{IE} r_E - w_{II} r_I + I^{ext}_I
+$$
 
 We classify each fixed point using the trace $\tau = \text{tr}(J)$, determinant $\Delta = \det(J)$, and discriminant $\tau^2 - 4\Delta$ of the Jacobian:
 
@@ -161,23 +167,31 @@ We classify each fixed point using the trace $\tau = \text{tr}(J)$, determinant 
 For our 3 fixed points:
 
 - **(0, 0):**
-$$J = \begin{pmatrix} -0.650 & -0.156
-\\ 0.115 & -0.597 \end{pmatrix}$$
+$$
+J = \begin{pmatrix} -0.650 & -0.156
+\\ 0.115 & -0.597 \end{pmatrix}
+$$
 
-	$$\tau = -1.247, \quad \Delta = 0.406, \quad \tau^2 - 4\Delta = 1.555 - 1.624 = -0.069 < 0$$
+	$$
+\tau = -1.247, \quad \Delta = 0.406, \quad \tau^2 - 4\Delta = 1.555 - 1.624 = -0.069 < 0
+$$
 	We have $\tau^2 - 4\Delta < 0$. This is a **stable spiral**.
 	
 
 - **(≈0.34, 0.17):**
-	$$J = \begin{pmatrix} 1.535 & -1.127 \\
- 1.000 & -1.347 \end{pmatrix}$$
+	$$
+J = \begin{pmatrix} 1.535 & -1.127 \\
+ 1.000 & -1.347 \end{pmatrix}
+  $$
 	
 	We have $\Delta = -0.941 < 0$. This is a **saddle point**.
 	
 
 - **(≈0.94, 0.68):**
-	$$J = \begin{pmatrix} -0.700 & -0.133 \\
- 1.422 & -1.703 \end{pmatrix}$$
+	$$
+J = \begin{pmatrix} -0.700 & -0.133 \\
+ 1.422 & -1.703 \end{pmatrix}
+  $$
 	
 	We have $\Delta = 1.381 > 0$, $\tau = -2.403 < 0$, and $\tau^2 - 4\Delta = 0.250 > 0$. This is a **stable node**.
 
