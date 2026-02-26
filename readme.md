@@ -2,7 +2,7 @@
 
 In [computational neuroscience](https://en.wikipedia.org/wiki/Computational_neuroscience "Computational neuroscience"), the **Wilson-Cowan model** ([Hugh R. Wilson](https://en.wikipedia.org/w/index.php?title=H.R._Wilson&action=edit&redlink=1 "H.R. Wilson (page does not exist)") & [Jack D. Cowan](https://en.wikipedia.org/wiki/Jack_D._Cowan "Jack D. Cowan")) describes the dynamics of interactions between populations of very simple excitatory and inhibitory model [neurons](https://en.wikipedia.org/wiki/Neuron "Neuron"). It is a mean-field model that tracks the **proportion of active neurons** in each population over time.
 
-![Schematic of the Wilson-Cowan model](figures/fnsys-16-723237-g001.webp)
+[^1]![Schematic of the Wilson-Cowan model](figures/fnsys-16-723237-g001.webp)
 
 $$\tau_E \frac{dr_E}{dt} = -r_E + F_E(w_{EE} \cdot r_E - w_{EI} \cdot r_I + I^{ext}_E)$$
 
