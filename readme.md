@@ -2,7 +2,7 @@
 
 In [computational neuroscience](https://en.wikipedia.org/wiki/Computational_neuroscience "Computational neuroscience"), the **Wilson-Cowan model** ([Hugh R. Wilson](https://en.wikipedia.org/w/index.php?title=H.R._Wilson&action=edit&redlink=1 "H.R. Wilson (page does not exist)") & [Jack D. Cowan](https://en.wikipedia.org/wiki/Jack_D._Cowan "Jack D. Cowan")) describes the dynamics of interactions between populations of very simple excitatory and inhibitory model [neurons](https://en.wikipedia.org/wiki/Neuron "Neuron"). It is a mean-field model that tracks the **proportion of active neurons** in each population over time.
 
-[^1]![[fnsys-16-723237-g001.webp]]
+![Schematic of the Wilson-Cowan model](figures/fnsys-16-723237-g001.webp)
 
 $$\tau_E \frac{dr_E}{dt} = -r_E + F_E(w_{EE} \cdot r_E - w_{EI} \cdot r_I + I^{ext}_E)$$
 
@@ -123,7 +123,7 @@ $$r_E = \frac{1}{13}\left(11r_I + 4.0 + \ln\frac{r_I + 0.0180}{0.9820 - r_I}\rig
 
 In the end we obtain the figure
 
-![[Pasted image 20260224144658.png]]
+![Phase plane analysis](figures/Pasted%20image%2020260224144658.png)
 
 Inserting point (0.1,0.5), it's easy to check the arrow direction. We omit here.
 
@@ -161,20 +161,23 @@ We classify each fixed point using the trace $\tau = \text{tr}(J)$, determinant 
 For our 3 fixed points:
 
 - **(0, 0):**
-$$J = \begin{pmatrix} -0.650 & -0.156 \\ 0.115 & -0.597 \end{pmatrix}$$
+$$J = \begin{pmatrix} -0.650 & -0.156
+\\ 0.115 & -0.597 \end{pmatrix}$$
 
 	$$\tau = -1.247, \quad \Delta = 0.406, \quad \tau^2 - 4\Delta = 1.555 - 1.624 = -0.069 < 0$$
 	We have $\tau^2 - 4\Delta < 0$. This is a **stable spiral**.
 	
 
 - **(≈0.34, 0.17):**
-	$$J = \begin{pmatrix} 1.535 & -1.127 \\ 1.000 & -1.347 \end{pmatrix}$$
+	$$J = \begin{pmatrix} 1.535 & -1.127 \\
+ 1.000 & -1.347 \end{pmatrix}$$
 	
 	We have $\Delta = -0.941 < 0$. This is a **saddle point**.
 	
 
 - **(≈0.94, 0.68):**
-	$$J = \begin{pmatrix} -0.700 & -0.133 \\ 1.422 & -1.703 \end{pmatrix}$$
+	$$J = \begin{pmatrix} -0.700 & -0.133 \\
+ 1.422 & -1.703 \end{pmatrix}$$
 	
 	We have $\Delta = 1.381 > 0$, $\tau = -2.403 < 0$, and $\tau^2 - 4\Delta = 0.250 > 0$. This is a **stable node**.
 
@@ -187,7 +190,7 @@ The system with default parameters ($I^{ext}_E = 0$) is therefore **bistable**.
 Recall the **Poincaré-Bendixson theorem** states that for a two-dimensional system, for which we know that the solutions will stay in **a bounded area** after some finite time and there is **no fixed point**, there must exist a periodic solution to which the trajectories converge.
 
 We sweep the $I^{ext}_E$ until we obtain only one fixed point which is unstable.
-![[Screenshot 2026-02-25 at 22.26.59.png]]
+![Stable Fixed Point Output](figures/Screenshot%202026-02-25%20at%2022.26.59.png)
 
 Note that after sweeping $I^{ext}_E$, We only get the stable 1 fixed point, why?
 
