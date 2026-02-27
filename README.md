@@ -25,8 +25,8 @@ The correction term $-\frac{1}{1 + e^{a\theta}}$ ensures $F(0) = 0$ (no input yi
 
 #### Time Constants
 
-- $\tau_E$ — time constant of the excitatory population. Controls how quickly E responds to input.
-- $\tau_I$ — time constant of the inhibitory population. A larger $\tau_I$ relative to $\tau_E$ means inhibition is slower, which can promote oscillations.
+- $\tau_E$ — time constant of the excitatory population.
+- $\tau_I$ — time constant of the inhibitory population. 
 
 #### Sigmoid Parameters
 
