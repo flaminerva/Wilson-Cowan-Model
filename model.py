@@ -1,5 +1,7 @@
-from dataclasses import dataclass
+"""Wilson-Cowan neural population model."""
+from dataclasses import dataclass,replace
 import numpy as np
+from scipy.optimize import brentq
 
 #This is in processing!!! I am just too lazy to use git ignore
 
@@ -25,29 +27,43 @@ class WilsonCowanParams:
     I_I: float = 0.0
 
 
+def _F(x, a, theta):
+    """Transfer function (shifted sigmoid)."""
+    return 1.0 / (1.0 + np.exp(-a * (x - theta))) - 1.0 / (1.0 + np.exp(a * theta))
+
+
+def _dF(x, a, theta):
+    """Derivative of transfer function."""
+    f = _F(x, a, theta)
+    c = 1.0 / (1.0 + np.exp(a * theta))
+    return a * (f + c) * (1.0 - f - c)
+
+
+def _F_inv(y, a, theta):
+    """Inverse of transfer function."""
+    c = 1.0 / (1.0 + np.exp(a * theta))
+    return theta + (1.0 / a) * np.log((y + c) / (1.0 - c - y))
 
 
 class WilsonCowanModel():
     '''Model'''
 
-    def __init__(self):
-        pass
-    def Jacobian(self,r_E: float, r_I: float, p: WilsonCowanParams) -> np.ndarray:
+    def __init__(self, p: WilsonCowanParams):
+        self.p = p
+
+    def with_para(self,**overrides)-> "WilsonCowanModel":
+        '''return modified para model'''
+        return WilsonCowanModel(replace(self.p, **overrides))
+
+
+    def Jacobian(self,r_E: float, r_I: float) -> np.ndarray:
         '''caculate Jacobian eigenvalues on fixed point (r_E,r_I),
         determine the state of system'''
-
-        def F(x,a,theta):
-            return 1.0/(1.0+np.exp(-a*(x-theta))) - 1.0/(1.0+np.exp(a*theta))
-
-
-        def dF(x,a,theta):
-            fx = F(x,a,theta)
-            return a * fx * (1.0 - fx)
-
+        p = self.p
         u_E = p.w_EE * r_E - p.w_EI * r_I + p.I_E
         u_I = p.w_IE * r_E - p.w_II * r_I + p.I_I
-        dF_E = dF(u_E, p.a_E, p.theta_E)
-        dF_I = dF(u_I, p.a_I, p.theta_I)
+        dF_E = _dF(u_E, p.a_E, p.theta_E)
+        dF_I = _dF(u_I, p.a_I, p.theta_I)
 
         J11 = (1.0 / p.tau_E) * (-1.0 + p.w_EE * dF_E)
         J12 = (1.0 / p.tau_E) * (-p.w_EI * dF_E)
@@ -59,63 +75,84 @@ class WilsonCowanModel():
             [J21,J22]
             ])
 
+    def _I_null(self,r_I:float) -> float:
+        '''input r_I return r_E'''
+        p = self.p
+        return (1/p.w_IE) * (p.w_II*r_I + _F_inv(r_I, p.a_I, p.theta_I) - p.I_I)
 
+    def _E_null(self,r_E:float) -> float:
+        '''input r_E return r_I'''
+        p = self.p
+        return (1/p.w_EI) * (p.w_EE*r_E - _F_inv(r_E, p.a_E, p.theta_E) + p.I_E)
 
-params = WilsonCowanParams()
-model = WilsonCowanModel()
-J = model.Jacobian(0,0,params)
-print(J)
-eigval = np.linalg.eigvals(J)
-print(eigval)
+    def find_fixed_point(self) -> list[tuple[float,float]] | None:
+        '''find all fixed point'''
+        r_I_vals = np.linspace(0, 0.982, 1000)
+        solution = []
+        diff = []
+        for r_I in r_I_vals:
+            r_E = self._I_null(r_I)
+            r_Ip = self._E_null(r_E)
+            diff.append(r_Ip-r_I)
 
-if np.all(np.real(eigval) < 0):
-    print("Stable Node / Spiral")
-else:
-    print("Unstable")
+        for i in range(len(diff)-1):
+            if diff[i]*diff[i+1]<0: # In this interval it has solution
+                r_I_star = brentq(
+                lambda r_I: self._E_null(self._I_null(r_I)) - r_I,
+                r_I_vals[i], r_I_vals[i + 1]
+            )
+                r_E_star = self._I_null(r_I_star)
+                solution.append((r_E_star, r_I_star))
+            elif abs(diff[i])<1e-8: #(0,0)
+                r_I = r_I_vals[i]
+                r_E = self._I_null(r_I)
+                solution.append((r_E,r_I))
 
+        return solution
 
-
-def one_fixed_point(I_e):
-    p = WilsonCowanParams(I_E=I_e)
-
-    def F_inv(y, a, theta):
-        c = 1 / (1 + np.exp(a * theta))
-        return theta + (1/a) * np.log((y + c) / (1 - c - y))
-
-    def I_null(r_I):
-        return (1/p.w_IE) * (p.w_II*r_I + F_inv(r_I, p.a_I, p.theta_I) - p.I_I)
-
-    def E_null(r_E):
-        return (1/p.w_EI) * (p.w_EE*r_E - F_inv(r_E, p.a_E, p.theta_E) + p.I_E)
-
-    r_I_vals = np.linspace(0, 0.982, 1000)
-    solution = []
-    diff = []
-    for r_I in r_I_vals:
-        r_E = I_null(r_I)
-        r_Ip = E_null(r_E)
-        diff.append(r_Ip-r_I)
-
-    for i in range(len(diff)-1):
-        if diff[i]*diff[i+1]<0: # In this interval it has solution
-            r_I = (r_I_vals[i]+r_I_vals[i+1])/2
-            r_E = I_null(r_I)
-            solution.append((r_E,r_I))
-        elif abs(diff[i])<1e-8: #(0,0)
-            r_I = r_I_vals[i]
-            r_E = I_null(r_I)
-            solution.append((r_E,r_I))
-
-    return (len(solution),solution) if len(solution)==1 else None
-
-for Ie in np.arange(0, 1, 0.05):
-    result = one_fixed_point(Ie)
-    if result is None:
-        continue
-    for r_E, r_I in result[1]:
-        J = model.Jacobian(r_E, r_I, params)
+    def state_system(self,r_E:float,r_I:float) -> str:
+        '''classify state of system'''
+        J = self.Jacobian(r_E,r_I)
         eigval = np.linalg.eigvals(J)
-        if np.all(np.real(eigval) < 0):
-            print(f"I_e={Ie:.2f}: Stable")
-        else:
-            print(f"I_e={Ie:.2f}: Unstable")
+        real_parts = np.real(eigval)
+        has_imag = np.any(np.abs(np.imag(eigval)) > 1e-10)
+        det = np.linalg.det(J)
+
+
+        if det < 0:
+            return "Saddle Point"
+        if np.all(real_parts < 0):
+            return "Stable Spiral" if has_imag else "Stable Node"
+        return "Unstable Spiral" if has_imag else "Unstable Node"
+
+
+
+def main():
+    '''run'''
+
+    PARAM_PRESETS = {
+        "default": {}, #bistable
+        "oscillatory": dict(w_EE=16.0, w_EI = 26.0, w_IE=20.0,
+                             w_II=1.0, tau_E=20.0, tau_I=10.0, theta_E=5.0, theta_I=20.0, I_I=7),
+    }
+
+    def make_params(name: str, **overrides) -> WilsonCowanParams:
+        return WilsonCowanParams(**{**PARAM_PRESETS[name], **overrides})
+
+    p1 = make_params("oscillatory")
+    p2 = make_params("default")
+    model = WilsonCowanModel(p1)
+    model1 = WilsonCowanModel(p2)
+    for Ie in np.arange(0, 2, 0.05):
+        m = model.with_para(I_E=Ie)
+        m1 = model1.with_para(I_E=Ie)
+        result = m.find_fixed_point()
+        result1 = m1.find_fixed_point()
+        if result:
+            for r_E, r_I in result:  # pylint: disable=not-an-iterable
+                print(f"oscillatory I_E={Ie:.2f}: {m.state_system(r_E, r_I)}")
+        if result1:
+            for r_E, r_I in result1: # pylint: disable=not-an-iterable
+                print(f"bistable I_E={Ie:.2f}: {m1.state_system(r_E, r_I)}")
+if __name__ == "__main__":
+    main()
