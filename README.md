@@ -244,6 +244,8 @@ Regarding the influence of parameters, we refer to the following papers rather t
 - **Time constants.** [Keeley et al. (2019)](https://doi.org/10.1152/jn.00741.2018): 
 > The models' flexibility to capture the broad range of gamma behavior depends directly on the timescales that represent recruitment of the excitatory and inhibitory firing rates. In particular, we find that weakly modulated gamma oscillations occur robustly when the recruitment timescale of inhibition is faster than that of excitation.
 
+Here is the output:
+![Output compare](figures/output_compare.png)
 
 ### Key References
 
