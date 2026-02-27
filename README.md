@@ -148,6 +148,7 @@ J = \begin{pmatrix} \frac{1}{\tau_E}(-1 + w_{EE} \cdot F'_E) & \frac{1}{\tau_E}(
 $$
 
 in which 
+
 $$
 F'(x) = a \cdot (F(x)+c)(1 - F(x) - c), \quad c = \frac{1}{1+e^{a\theta}}
 $$
