@@ -85,6 +85,7 @@ class WilsonCowanModel():
         '''input r_E return r_I'''
         p = self.p
         return (1/p.w_EI) * (p.w_EE*r_E - _F_inv(r_E, p.a_E, p.theta_E) + p.I_E)
+    
 
     def find_fixed_point(self) -> list[tuple[float,float]] | None:
         '''find all fixed point'''
