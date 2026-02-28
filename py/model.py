@@ -1,9 +1,10 @@
 """Wilson-Cowan neural population model."""
 from dataclasses import dataclass,replace
 import numpy as np
+import matplotlib.pyplot as plt
 from scipy.optimize import brentq
+import visual as vis
 
-#This is in processing!!! I am just too lazy to use git ignore
 
 # pylint: disable=invalid-name
 @dataclass
@@ -125,7 +126,26 @@ class WilsonCowanModel():
             return "Stable Spiral" if has_imag else "Stable Node"
         return "Unstable Spiral" if has_imag else "Unstable Node"
 
+def sweep(model):
+    """parameter space"""
+    results = []
+    for w_EE in np.arange(5, 25, 0.5):
+        for w_II in np.arange(0, 20, 0.5):
+            found_oscillatory = False
+            for I_E in np.arange(0, 5, 0.05):
+                m = model.with_para(w_EE=w_EE, w_II=w_II, I_E=I_E)
+                fps = m.find_fixed_point()
+                if fps:
+                    all_unstable = all(
+                        np.trace(m.Jacobian(r_E, r_I)) > 0
+                        for r_E, r_I in fps
+                    )
+                    if all_unstable:
+                        found_oscillatory = True
+                        break
+            results.append((w_EE, w_II, found_oscillatory))
 
+    return results
 
 def main():
     '''run'''
@@ -143,6 +163,8 @@ def main():
     p2 = make_params("default")
     model = WilsonCowanModel(p1)
     model1 = WilsonCowanModel(p2)
+    fixed_point = []
+    fixed_point1 = []
     for Ie in np.arange(0, 2, 0.05):
         m = model.with_para(I_E=Ie)
         m1 = model1.with_para(I_E=Ie)
@@ -150,9 +172,40 @@ def main():
         result1 = m1.find_fixed_point()
         if result:
             for r_E, r_I in result:  # pylint: disable=not-an-iterable
-                print(f"oscillatory I_E={Ie:.2f}: {m.state_system(r_E, r_I)}")
+                state = m.state_system(r_E,r_I)
+                fixed_point.append(((Ie,r_E),state))
+                print(f"oscillatory I_E={Ie:.2f}: {state}")
+
         if result1:
             for r_E, r_I in result1: # pylint: disable=not-an-iterable
-                print(f"bistable I_E={Ie:.2f}: {m1.state_system(r_E, r_I)}")
+                state = m1.state_system(r_E,r_I)
+                fixed_point1.append(((Ie,r_E),state))
+                J = m1.Jacobian(r_E, r_I)
+                tau = np.trace(J)
+                delta = np.linalg.det(J)
+                disc = tau**2 - 4*delta
+                print(f"bistable I_E={Ie:.2f}: ({r_E:.4f},{r_I:.4f}) τ={tau:.4f} Δ={delta:.4f} disc={disc:.4f} -> {state}")
+
+    fig, (ax2, ax1) = plt.subplots(1, 2, figsize=(12, 5))
+    vis.plot_fixed_points(fixed_point, ax=ax1, label="Oscillatory")
+    vis.plot_fixed_points(fixed_point1, ax=ax2, label="Bistable (NMA)")
+    plt.tight_layout()
+    fig.savefig('figures/fixed_points.png', dpi=200)
+    plt.show()
+
+    fig, (ax2) = plt.subplots(1, 1, figsize=(7, 5))
+    vis.plot_fixed_points(fixed_point1, ax=ax2, label="Bistable (NMA)")
+    plt.tight_layout()
+    fig.savefig('figures/nma.png', dpi=100)
+    plt.show()
+
+
+    fig, (ax2, ax1) = plt.subplots(1, 2, figsize=(12, 5))
+    vis.plot_phase_plane(model, ax=ax1, label="Oscillatory")
+    vis.plot_phase_plane(model1, ax=ax2, label="Bistable (NMA)")
+    plt.tight_layout()
+    fig.savefig('figures/phase_plane.png', dpi=200)
+    plt.show()
+
 if __name__ == "__main__":
     main()

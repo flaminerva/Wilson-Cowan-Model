@@ -183,6 +183,29 @@
       "bases:新建数据库": false
     }
   },
-  "active": "89cf335b4eb000c5",
-  "lastOpenFiles": []
+  "active": "09e7f7e01e4a2ddb",
+  "lastOpenFiles": [
+    "py/visual.py",
+    "py/model.py",
+    "py",
+    "scr",
+    "docs/WC_report.pdf",
+    "docs",
+    "figures/nma.png",
+    "figures/phase_plane.png",
+    "figures/fixed_points.png",
+    "__pycache__/visual.cpython-314.pyc",
+    "__pycache__",
+    "visual.py",
+    "figures/parameter_space.png",
+    "result.txt",
+    "figure.py",
+    "NEU/lib/python3.14/site-packages/matplotlib/mpl-data/sample_data/logo2.png",
+    "NEU/lib/python3.14/site-packages/matplotlib/mpl-data/sample_data/grace_hopper.jpg",
+    "NEU/lib/python3.14/site-packages/matplotlib/mpl-data/sample_data/Minduka_Present_Blue_Pack.png",
+    "NEU/lib/python3.14/site-packages/matplotlib/mpl-data/images/zoom_to_rect_large.png",
+    "NEU/lib/python3.14/site-packages/matplotlib/mpl-data/images/zoom_to_rect.svg",
+    "NEU/lib/python3.14/site-packages/matplotlib/mpl-data/images/zoom_to_rect.png",
+    "NEU/lib/python3.14/site-packages/pyparsing/ai/best_practices.md"
+  ]
 }
