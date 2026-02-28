@@ -136,15 +136,15 @@ def sweep(model):
                 m = model.with_para(w_EE=w_EE, w_II=w_II, I_E=I_E)
                 fps = m.find_fixed_point()
                 if fps:
-                    all_unstable = all(
-                        np.trace(m.Jacobian(r_E, r_I)) > 0
+                    has_stable = any(
+                        np.linalg.det(m.Jacobian(r_E, r_I)) > 0
+                        and np.trace(m.Jacobian(r_E, r_I)) < 0
                         for r_E, r_I in fps
                     )
-                    if all_unstable:
+                    if not has_stable:
                         found_oscillatory = True
                         break
             results.append((w_EE, w_II, found_oscillatory))
-
     return results
 
 def main():
@@ -184,7 +184,11 @@ def main():
                 tau = np.trace(J)
                 delta = np.linalg.det(J)
                 disc = tau**2 - 4*delta
-                print(f"bistable I_E={Ie:.2f}: ({r_E:.4f},{r_I:.4f}) τ={tau:.4f} Δ={delta:.4f} disc={disc:.4f} -> {state}")
+                u_I = p2.w_IE * r_E - p2.w_II * r_I + p2.I_I
+                dF_I = _dF(u_I, p2.a_I, p2.theta_I)
+                u_E = p2.w_EE * r_E - p2.w_EI * r_I + Ie
+                dF_E = _dF(u_E, p2.a_E, p2.theta_E)
+                print(f"bistable I_E={Ie:.2f}: ({r_E:.4f},{r_I:.4f}) τ={tau:.4f} Δ={delta:.4f} disc={disc:.4f} F'_E={dF_E:.4f} F'_I={dF_I:.4f} -> {state}")
 
     fig, (ax2, ax1) = plt.subplots(1, 2, figsize=(12, 5))
     vis.plot_fixed_points(fixed_point, ax=ax1, label="Oscillatory")

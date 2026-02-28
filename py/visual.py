@@ -46,17 +46,13 @@ def plot_oscillatory_region(results):
     ax.contourf(w_EE_vals, w_II_vals, grid,
                 levels=[0, 0.5, 1], colors=['#3B4CC0', '#B40426'], alpha=0.85)
 
-    plt.plot(9, 11, 'ko', markersize=10)
-    plt.plot(16, 1, 'w*', markersize=15, markeredgecolor='black')
+    plt.plot(9, 11, 'w*', markersize=15,markeredgecolor='black')
 
     plt.annotate('NMA\n(bistable)', xy=(9, 11), xytext=(6.5, 14),
                     fontsize=10, ha='center',
                     arrowprops=dict(arrowstyle='->', color='white'),
                     color='white')
-    plt.annotate('Li et al.\n(oscillatory)', xy=(16, 1), xytext=(19, 3),
-                    fontsize=10, ha='center',
-                    arrowprops=dict(arrowstyle='->', color='white'),
-                    color='white')
+
 
     plt.xlabel('$w_{EE}$', fontsize=12)
     plt.ylabel('$w_{II}$', fontsize=12)
