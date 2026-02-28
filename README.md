@@ -4,12 +4,11 @@ Please check the [report (PDF)](docs/WC_report.pdf) to see the full theoretical 
 
 Qualitative analysis of the Wilson-Cowan neural population model, comparing bistable (Neuromatch Academy) and oscillatory (Li et al., 2022) parameter regimes.
 
-## What we done
+## What we‘ve done
 - **Nullcline and phase plane analysis** for both parameter sets
 - **Fixed point classification** via Jacobian eigenvalues (stable node/spiral, saddle, unstable spiral)
 - **Parameter space scan** of oscillatory regime in ($w_{EE}$, $w_{II}$) plane
 - **Explanation of why NMA parameters cannot oscillate** (trace analysis, dual role of $w_{II}$)
 
 ## What in the future
-We are writing a C# version for visualization and interaction.
-And a Julia version for fun (Purely because of aesthetic preferences).
+We are writing a C# version for visualization and interaction, and a Julia version for fun (purely because of aesthetic preferences).
