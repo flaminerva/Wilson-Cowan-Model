@@ -29,8 +29,10 @@ theoretical violations across the entire framework. The full
 sufficient condition for a limit cycle is Level 3 satisfied at
 the system's **unique** fixed point (~90% confirmation rate; the
 gap from 100% is attributable to numerical detection limits).
-Multi-fixed-point systems rarely oscillate despite passing
-Level 3, as competing stable attractors capture trajectories.
+Multi-fixed-point systems show no confirmed limit cycles despite
+passing Level 3; all such cases are consistent with transient
+oscillations near an unstable spiral that are eventually captured
+by a competing stable attractor.
 
 See the [full report (PDF)](docs/WC_report.pdf) for derivations,
 verification, and comparison with Li et al. (2022).

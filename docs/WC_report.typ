@@ -660,7 +660,11 @@ classification U1/S1/Sad1 (one unstable spiral, one stable
 attractor, one saddle). No U2/S0/Sad1 configuration — in which
 a global limit cycle could enclose all three fixed points — was
 observed. This indicates that the observed oscillations are
-basin-restricted: trajectories initiated near the unstable spiral
+basin-restricted#footnote[Whether the 10 three-fixed-point oscillations represent true
+(supercritical Hopf) limit cycles coexisting with the stable
+attractor or transient spirals that eventually decay would require
+computing the first Lyapunov coefficient at the unstable fixed
+point, which is a direction left for future investigation.]: trajectories initiated near the unstable spiral
 orbit within its basin before eventually being captured by the
 competing stable attractor, producing transient oscillatory
 behaviour that the detector registers as periodic.
