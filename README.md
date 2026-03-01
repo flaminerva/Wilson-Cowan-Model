@@ -10,13 +10,12 @@ We derive a **structural necessary condition** for oscillation:
 
 $$w_{EI}w_{IE} > \frac{16\,\tau_E\,w_{II}}{\tau_I\,a_E}$$
 
-This single inequality, involving only coupling weights, time
-constants, and sigmoid gain, determines whether oscillation is
-possible regardless of external input or fixed-point tuning. The
-NMA parameters violate it ($52 < 73.3$); the Li et al. parameters
+This single inequality determines whether oscillation is possible
+regardless of external input or fixed-point tuning. The NMA
+parameters violate it ($52 < 73.3$); the Li et al. parameters
 satisfy it with wide margin ($520 \gg 32$).
 
-We further develop a **three-level verification framework**:
+We develop a **three-level verification framework**:
 
 1. **Structural** — can the network support oscillation at all?
 2. **Window existence** — does a feasibility window remain open
@@ -24,6 +23,12 @@ We further develop a **three-level verification framework**:
 3. **Operating point in window** — does the actual $w_{EE}F'_E$
    fall between the trace lower bound and the determinant upper
    bound?
+
+A **Monte Carlo validation** ($N = 5000$) confirms the structural
+condition as strictly necessary (0% violation rate). The full
+sufficient condition for a limit cycle is Level 3 satisfied at
+the system's **unique** fixed point (~90% confirmation rate;
+the gap from 100% is attributable to numerical detection limits).
 
 See the [full report (PDF)](docs/WC_report.pdf) for derivations,
 verification, and comparison with Li et al. (2022).
