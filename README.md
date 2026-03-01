@@ -24,11 +24,13 @@ We develop a **three-level verification framework**:
    fall between the trace lower bound and the determinant upper
    bound?
 
-A **Monte Carlo validation** ($N = 5000$) confirms the structural
-condition as strictly necessary (0% violation rate). The full
+A **Monte Carlo validation** ($N = 5000$) confirms 0 genuine
+theoretical violations across the entire framework. The full
 sufficient condition for a limit cycle is Level 3 satisfied at
-the system's **unique** fixed point (~90% confirmation rate;
-the gap from 100% is attributable to numerical detection limits).
+the system's **unique** fixed point (~90% confirmation rate; the
+gap from 100% is attributable to numerical detection limits).
+Multi-fixed-point systems rarely oscillate despite passing
+Level 3, as competing stable attractors capture trajectories.
 
 See the [full report (PDF)](docs/WC_report.pdf) for derivations,
 verification, and comparison with Li et al. (2022).
