@@ -1,16 +1,43 @@
-## Wilson-Cowan Model
+# Conditions for Oscillation in the Wilson-Cowan Model
 
-Please check the [report (PDF)](docs/WC_report.pdf) to see the full theoretical analysis.
+Analytical conditions for Hopf bifurcation in the Wilson-Cowan
+neural population model, with application to the Neuromatch Academy
+(NMA) and Li et al. (2022) parameter sets.
 
-Qualitative analysis of the Wilson-Cowan neural population model, comparing bistable (Neuromatch Academy) and oscillatory (Li et al., 2022) parameter regimes.
+## Summary
 
-## What we‘ve done
-- **Nullcline and phase plane analysis** for both parameter sets
-- **Fixed point classification** via Jacobian eigenvalues (stable node/spiral, saddle, unstable spiral)
-- **Parameter space scan** of oscillatory regime in ($w_{EE}$, $w_{II}$) plane
-- **Conditions of oscillation**\
-In the Wilson-Cowan model, the product of the E-I cross-coupling weights must exceed the product of the self-feedback weights for (gamma) oscillations to be possible; even then, the excitatory weight must fall within a finite window to keep the fixed point in the sensitive region of the sigmoid function.
+We derive a **structural necessary condition** for oscillation:
 
+$$w_{EI}w_{IE} > \frac{16\,\tau_E\,w_{II}}{\tau_I\,a_E}$$
+
+This single inequality, involving only coupling weights, time
+constants, and sigmoid gain, determines whether oscillation is
+possible regardless of external input or fixed-point tuning. The
+NMA parameters violate it ($52 < 73.3$); the Li et al. parameters
+satisfy it with wide margin ($520 \gg 32$).
+
+We further develop a **three-level verification framework**:
+
+1. **Structural** — can the network support oscillation at all?
+2. **Window existence** — does a feasibility window remain open
+   at the realised fixed point?
+3. **Operating point in window** — does the actual $w_{EE}F'_E$
+   fall between the trace lower bound and the determinant upper
+   bound?
+
+See the [full report (PDF)](docs/WC_report.pdf) for derivations,
+verification, and comparison with Li et al. (2022).
+
+## Key references
+
+- Li, Liu & Wang (2022). *Bidirectionally regulating gamma
+  oscillations in Wilson-Cowan model by self-feedback loops.*
+  Frontiers in Systems Neuroscience, 16, 723237.
+- Keeley, Byrne, Fenton & Rinzel (2019). *Firing rate models for
+  gamma oscillations.* Journal of Neurophysiology, 121(6),
+  2181–2190.
+- Neuromatch Academy — Computational Neuroscience, W2D4: Dynamic
+  Networks.
 
 ## What in the future
 We are writing a C# version for visualization and interaction, and a Julia version for fun (purely because of aesthetic preferences).
