@@ -197,7 +197,7 @@ $ J = mat(
 
 in which
 
-$ F'(x) = a dot (F(x) + c)(1 - F(x) - c), quad c = 1 / (1 + e^(a theta)) $
+$ F'(x) = a dot (F(x) + c)(1 - F(x) - c), quad c = 1 / (1 + e^(a theta)) $<eq:sigmoid-deriv>
 
 Note that $F'$ is evaluated at the sigmoid input, not at $r_E$ or $r_I$ directly:
 
@@ -327,14 +327,46 @@ Multiplying both sides by $(1 + w_(I I)F'_I)$ and simplifying:
 $ w_(E I)w_(I E) > tau_E/tau_I dot
   (1 + w_(I I)F'_I)^2 / (F'_E F'_I) $<eq:master>
 
+
 Since $F'_E$ and $F'_I$ are not free parameters but determined by
 the fixed point, we minimise the right-hand side to obtain the
-weakest necessary condition. $F'_E$ appears only in the denominator,
-so we take its maximum $F'_E = a_E\/4$ (achieved when
-$u_E = theta_E$). For $F'_I$, differentiating with respect to $F'_I$
-and setting to zero gives the optimum at $F'_I = 1\/w_(I I)$, yielding:
+weakest necessary condition.
 
-$ w_(E I)w_(I E) > (16 tau_E w_(I I)) / (tau_I a_E) $<eq:structural>
+*Maximising $F'_E$.* $F'_E$ appears only in the denominator, so
+we need its maximum. From @eq:sigmoid-deriv:
+$ F'(x) = a dot (F(x) + c)(1 - F(x) - c) $
+This is maximised when $F(x) + c = 1 slash 2$, i.e.~at the
+sigmoid midpoint $u_E = theta_E$. Substituting:
+$ F'^"max"_E = a_E dot 1 / 2 dot 1 / 2 = a_E / 4 $
+
+*Minimising over $F'_I$.* Let $phi = F'_I > 0$. The right-hand
+side of @eq:master becomes:
+$ R(phi) = tau_E / tau_I dot
+  (1 + w_(I I) phi)^2 / ((a_E slash 4) dot phi)
+  = (4 tau_E) / (tau_I a_E) dot
+  (1 + 2 w_(I I) phi + w_(I I)^2 phi^2) / phi $
+Expanding:
+$ R(phi) = (4 tau_E) / (tau_I a_E) (
+  1 / phi + 2 w_(I I) + w_(I I)^2 phi) $
+Differentiating and setting to zero:
+$ R'(phi) = (4 tau_E) / (tau_I a_E) (
+  -1 / phi^2 + w_(I I)^2) = 0 $
+$ phi^2 = 1 / w_(I I)^2 quad ==> quad
+  phi^* = 1 / w_(I I) $
+To confirm this is a minimum:
+$ R''(phi) = (4 tau_E) / (tau_I a_E) dot
+  2 / phi^3 > 0 quad "for all" phi > 0 $
+
+Substituting $F'_E = a_E slash 4$ and $F'_I = 1 slash w_(I I)$:
+$ R(phi^*) = (4 tau_E) / (tau_I a_E) (
+  w_(I I) + 2 w_(I I) + w_(I I))
+  = (4 tau_E) / (tau_I a_E) dot 4 w_(I I)
+  = (16 tau_E w_(I I)) / (tau_I a_E) $
+
+This yields the structural necessary condition:
+$ w_(E I) w_(I E) > (16 tau_E w_(I I)) / (tau_I a_E) $ <eq:structural>
+
+
 Due to the $F'_E$ and $F'_I$ are jointly determined by the
 fixed-point coordinates, they cannot in general simultaneously
 attain their optimal values. This makes @eq:structural a
@@ -832,10 +864,10 @@ Bogdanov-Takens / saddle-node-Hopf analysis is a standard topic
 in bifurcation theory (see Izhikevich (2007), Ch. 6; Kuznetsov
 (2004), Ch. 8) but requires case-specific computation for the
 Wilson-Cowan sigmoid. Completing this analysis would close the gap
-between structural necessity (Equation 25) and a fully parametric
+between structural necessity (Equation 33) and a fully parametric
 sufficient condition, eliminating the need for fixed-point
 enumeration.
-#v(2em)
+
 
 = Key References
 
