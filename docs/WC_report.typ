@@ -26,9 +26,7 @@
     further develop a three-level verification framework —
     structural feasibility, window existence at realised fixed
     points, and actual operating point within the window — and
-    validate it with a Monte Carlo study ($N = 5000$). The
-    structural condition is confirmed as a strict necessary
-    condition (0% violation rate), while the full sufficient
+    validate it with a Monte Carlo study ($N = 5000$). The structural condition is confirmed as a strict necessary condition, with zero genuine theoretical violations across the entire framework in 5000 samples, while the full sufficient
     condition requires the unstable fixed point to be the
     system's unique equilibrium. Applying this framework to the
     Li et al. analysis, we show that excitatory self-feedback
@@ -612,6 +610,12 @@ $tau_I = 14.4$; the system has a single stable fixed point
 (no unstable point), making a true limit cycle impossible.
 This is a false positive from the oscillation detector.
 
+Similarly, all 15 middle-zone oscillations and the single Level 2
+anomaly involve systems with no unstable fixed point (U0/S1/Sad0
+or U0/S2/Sad1). These are false positives from the oscillation
+detector — slowly decaying spirals near the Hopf boundary — not
+theoretical violations.
+
 The Level 3 confirmation rate of 42% reveals an important refinement. Level 3 guarantees that
 a fixed point is locally unstable (Hopf condition), but not that
 a limit cycle forms. In multi-fixed-point systems, an unstable
@@ -651,6 +655,19 @@ count:
   attractors suppress limit cycle formation.]],
 )
 
+The 10 oscillating three-fixed-point cases all share the
+classification U1/S1/Sad1 (one unstable spiral, one stable
+attractor, one saddle). No U2/S0/Sad1 configuration — in which
+a global limit cycle could enclose all three fixed points — was
+observed. This indicates that the observed oscillations are
+basin-restricted: trajectories initiated near the unstable spiral
+orbit within its basin before eventually being captured by the
+competing stable attractor, producing transient oscillatory
+behaviour that the detector registers as periodic.
+
+ *Across all 5000 samples, zero genuine
+violations of the analytical framework were observed.*
+
 The complete sufficient condition for oscillation in the
 Wilson-Cowan model is therefore:
 
@@ -659,7 +676,7 @@ Wilson-Cowan model is therefore:
 ]
 
 When a single fixed point exists and is an unstable spiral, the
-system is bounded ($r_E, r_I in [0, 1]$) and contains no other
+system is bounded ($r_E, r_I in [0, 1]$)#footnote[With correction term it's slightly different.] and contains no other
 attractor, so the Poincaré-Bendixson theorem guarantees a limit
 cycle.
 
@@ -741,7 +758,6 @@ We refer to the following papers:
 ]
 
 
-#v(2em)
 
 = Limitations
 
@@ -755,15 +771,15 @@ intersection, and may not simultaneously attain their optimal
 values. This makes @eq:structural a potentially loose bound:
 the gap between structural necessity and actual oscillation is
 quantified by the three-level framework in sufficiency, but
-no closed-form sufficient condition was obtained.
+no closed-form sufficient condition was obtained (see the section 5).
 
-*Finite numerical scope.* The verification in the section 3.2
-covers a discrete grid of $(w_(E E), w_(I I))$ values with NMA
-cross-coupling. The conclusion that no three-fixed-point global
-oscillation mechanism was observed is empirical, not a topological
-proof: the Poincaré index theorem permits a limit cycle enclosing
-all three fixed points (index sum $= +1$), so such behaviour
-cannot be ruled out in other parameter regimes.
+*Finite numerical scope.* The Monte Carlo study ($N = 5000$)
+found no three-fixed-point system with two unstable equilibria
+(U2/S0/Sad1), but this is an empirical observation, not a
+topological proof. The Poincaré index theorem permits a limit
+cycle enclosing all three such fixed points (index sum $= +1$),
+so this configuration cannot be ruled out in other parameter
+regimes.
 
 *Sigmoid form.* All results assume the specific sigmoid
 with the correction term $F(0) = 0$. The original
@@ -778,8 +794,43 @@ shift the oscillatory boundaries quantitatively, though the
 qualitative structure of the trace-determinant framework is
 preserved.
 
+= Future work
 
+The Monte Carlo validation identifies a sharp empirical boundary:
+Level 3 at a unique fixed point yields oscillation at $approx
+90%$, whereas Level 3 at one of three fixed points yields only
+$approx 6%$. Detailed logging reveals that all oscillating
+three-fixed-point systems have configuration U1/S1/Sad1 (one
+unstable, one stable, one saddle); no U2/S0/Sad1 configuration
+was observed. This suggests that three-fixed-point oscillation in
+the sampled parameter range occurs through basin-restricted limit
+cycles around the unstable spiral, rather than global limit cycles
+enclosing all three fixed points.
 
+A natural next step is to derive, from parameters alone, whether
+there exists an $I_E^"ext"$ that produces a unique unstable fixed
+point. The key geometric ingredient is the E-nullcline fold. The
+trace condition requires $w_(E E) F'_E > 1$, which at the sigmoid
+midpoint demands $w_(E E) > 4 slash a_E$. But this is precisely
+the condition for the E-nullcline to be non-monotone (S-shaped),
+guaranteeing multiple fixed points at some input levels. As
+$I_E^"ext"$ increases, the E-nullcline shifts upward until a
+saddle-node bifurcation annihilates two fixed points, leaving a
+unique equilibrium. If this surviving fixed point satisfies the
+Hopf condition, a limit cycle is guaranteed by the
+Poincaré-Bendixson theorem.
+
+The question therefore reduces to whether the Hopf bifurcation
+occurs in the one-fixed-point region of the $(I_E^"ext",
+w_(E E))$ parameter plane — a codimension-2 problem involving the
+interaction between saddle-node and Hopf bifurcation curves. This
+Bogdanov-Takens / saddle-node-Hopf analysis is a standard topic
+in bifurcation theory (see Izhikevich (2007), Ch. 6; Kuznetsov
+(2004), Ch. 8) but requires case-specific computation for the
+Wilson-Cowan sigmoid. Completing this analysis would close the gap
+between structural necessity (Equation 25) and a fully parametric
+sufficient condition, eliminating the need for fixed-point
+enumeration.
 #v(2em)
 
 = Key References
