@@ -16,7 +16,6 @@ parameters violate it ($52 < 73.3$); the Li et al. parameters
 satisfy it with wide margin ($520 \gg 32$).
 
 We develop a **three-level verification framework**:
-
 1. **Structural** — can the network support oscillation at all?
 2. **Window existence** — does a feasibility window remain open
    at the realised fixed point?
@@ -24,16 +23,20 @@ We develop a **three-level verification framework**:
    fall between the trace lower bound and the determinant upper
    bound?
 
-A **Monte Carlo validation** ($N = 5000$) confirms 0 genuine
-theoretical violations across the entire framework. The full
-sufficient condition for a limit cycle is Level 3 satisfied at
-the system's **unique** fixed point (~90% confirmation rate; the
-gap from 100% is attributable to numerical detection limits).
-Multi-fixed-point systems passing Level 3 showed only 6%
-oscillation, consistent with either transient spirals captured
-by a competing stable attractor or small supercritical limit
-cycles coexisting with it; distinguishing these requires
-computing the first Lyapunov coefficient (see Future Work in the document).
+By coupling the sigmoid derivatives along the I-nullcline, we
+tighten the structural bound and show the decoupled optimum is
+an exact special case of the coupled problem. An **I-nullcline
+sweep algorithm** identifies, for each parameter set, whether
+any external input produces a unique unstable fixed point.
+
+Two independent **Monte Carlo validations** ($N = 5000$ each)
+confirm 0 genuine theoretical violations. The I-nullcline sweep
+establishes the essential dynamical divide: unique unstable
+fixed point → **97.8%** oscillation versus **0.3%** for
+multi-fixed-point systems. The three-level framework with
+random external input yields consistent results (89.7% vs
+6.2%), with the difference attributable to the sweep selecting
+the most favourable input.
 
 See the [full report (PDF)](docs/WC_report.pdf) for derivations,
 verification, and comparison with Li et al. (2022).
