@@ -54,4 +54,4 @@ verification, and comparison with Li et al. (2022).
 
 ## What in the future
 We are writing a C# version for visualization and interaction, and a Julia version for fun (purely because of aesthetic preferences).
-And please note that I haven't submitted the algo modual(the test modual is the old version), I will refactory it in julia.
+And please note that I haven't submitted the algo (the test is the old version), I will refactory it in julia.
