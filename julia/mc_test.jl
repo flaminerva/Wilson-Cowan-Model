@@ -7,15 +7,13 @@ using .WCModel
 
 function hopf(rI,rE,p::WCParams)
     "τ > 0 and Δ > 0"
-    cE = correct(p.aE, p.θE)
-    cI = correct(p.aI, p.θI)
-    FpE = p.aE * (rE + cE) * (1.0 - rE - cE)
-    FpI = p.aI * (rI + cI) * (1.0 - rI - cI)
+    FdE = sigdr(rE,p.aE,p.θE)
+    FdI = sigdr(rI,p.aI,p.θI)
 
-    J11 = (-1.0 + p.wEE * FpE) / p.τE
-    J12 = (-p.wEI * FpE) / p.τE
-    J21 = (p.wIE * FpI) / p.τI
-    J22 = (-1.0 - p.wII * FpI) / p.τI
+    J11 = (-1.0 + p.wEE * FdE) / p.τE
+    J12 = (-p.wEI * FdE) / p.τE
+    J21 = (p.wIE * FdI) / p.τI
+    J22 = (-1.0 - p.wII * FdI) / p.τI
 
     τ = J11 + J22
     Δ = J11 * J22 - J12 * J21

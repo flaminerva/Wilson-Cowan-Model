@@ -25,6 +25,11 @@ function sigd(x, a, θ)
     return a * (F + c) * (1.0 - F - c)
 end
 
+function sigdr(r, a, θ)
+    c = correct(a, θ)
+    return a * (r + c) * (1.0 - r - c)
+end
+
 function siginv(x,a,θ)
     c = correct(a, θ)
     return θ - (1.0 / a) * log((1.0 / (x + c)) - 1.0)
