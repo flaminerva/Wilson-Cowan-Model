@@ -55,5 +55,4 @@ verification, etc.
 ## What in the future
 We are writing a C# version for visualization and interaction, and a Julia version for fun (purely because of aesthetic preferences).
 
-And please note that we haven't submitted the algo (the test is the old version), we will refactory it in Julia.
-(But for the underlying theory you can check in the document)
+P.S. I personally highly recommend the julia version which is much neater.
