@@ -1,6 +1,7 @@
 "WC Model"
 module WCModel
 export WCParams, sig, sigd, I_null, rhs, fIext_E, correct
+
 struct WCParams
     wEE::Float64; wEI::Float64; wIE::Float64; wII::Float64
     τE::Float64;  τI::Float64
@@ -32,7 +33,11 @@ end
 
 function siginv(x,a,θ)
     c = correct(a, θ)
-    return θ - (1.0 / a) * log((1.0 / (x + c)) - 1.0)
+    arg = 1.0 / (x + c) - 1.0
+    if arg <= 0
+        return NaN
+    end
+    return θ - (1.0 / a) * log(arg)
 end
 
 function I_null(rI, p::WCParams)

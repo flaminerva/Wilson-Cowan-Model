@@ -1,9 +1,12 @@
 # This is still in process. 
-# Currently we haven't completed the random 5000 test, but only the algo itself.
-using DifferentialEquations
-include("model.jl")
-using .WCModel
 
+using DifferentialEquations
+using Distributions
+using Random
+include("model.jl")
+using .WCModel: WCParams, sig, sigd, sigdr, I_null, rhs, fIext_E, correct
+
+Random.seed!(42)
 
 function hopf(rI,rE,p::WCParams)
     "τ > 0 and Δ > 0"
@@ -24,7 +27,7 @@ end
 function full_check(p::WCParams)
     "range of rI in [-cI, 1 - cI]"
     cI = correct(p.aI,p.θI)
-    rIval = -cI:0.001:1-cI
+    rIval = range(-cI + 1e-6, 1 - cI - 1e-6, length=1000)
 
     R = rhs.(rIval,Ref(p))
     rE = I_null.(rIval,Ref(p))
@@ -54,3 +57,49 @@ function full_check(p::WCParams)
 
     return false
 end
+
+
+function random_params()
+    WCParams(
+        rand(Uniform(1, 30)),    # wEE
+        rand(Uniform(1, 30)),    # wEI
+        rand(Uniform(1, 30)),    # wIE
+        rand(Uniform(0, 20)),    # wII
+        rand(Uniform(0.5, 30)),  # τE
+        rand(Uniform(0.5, 30)),  # τI
+        rand(Uniform(0.5, 3)),   # aE
+        rand(Uniform(0.5, 3)),   # aI
+        rand(Uniform(1, 10)),    # θE
+        rand(Uniform(1, 20)),    # θI
+        rand(Uniform(-2, 5)),    # Iext_E
+        rand(Uniform(-2, 5)),    # Iext_I
+    )
+end
+
+
+function wc!(du,u,p,t) 
+    du[1] = (-u[1] + sig(p.wEE*u[1] - p.wEI*u[2] + p.Iext_E, p.aE, p.θE)) / p.τE
+    du[2] = (-u[2] + sig(p.wIE*u[1] - p.wII*u[2] + p.Iext_I, p.aI, p.θI)) / p.τI
+end
+
+function detector()
+end
+
+
+
+function run()
+    # Here we use Tsit5(to keep the result same as docu, use RK4)
+    sol = nothing
+    for i in 1:5000
+        p = random_params()
+        predic = full_check(p)
+        prob = ODEProblem(wc!, [0.1, 0.1], (0.0, 100.0), p)
+        sol = solve(prob, Tsit5())
+        # sol = solve(prob, RK4()) PLEASE USE RK4 TO KEEP THE RESULT SAME AS IN DOCUMENT.
+        # actual = detect_osci(sol)
+    end
+    return sol
+end
+
+sol = run()
+println(sol(50.0))
