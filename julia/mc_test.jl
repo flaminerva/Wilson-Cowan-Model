@@ -7,10 +7,10 @@ using .WCModel
 
 function hopf(rI,rE,p::WCParams)
     "τ > 0 and Δ > 0"
-    uE = p.wEE * rE - p.wEI * rI + p.Iext_E
-    uI = p.wIE * rE - p.wII * rI + p.Iext_I
-    FpE = sigd(uE, p.aE, p.θE)
-    FpI = sigd(uI, p.aI, p.θI)
+    cE = correct(p.aE, p.θE)
+    cI = correct(p.aI, p.θI)
+    FpE = p.aE * (rE + cE) * (1.0 - rE - cE)
+    FpI = p.aI * (rI + cI) * (1.0 - rI - cI)
 
     J11 = (-1.0 + p.wEE * FpE) / p.τE
     J12 = (-p.wEI * FpE) / p.τE
@@ -20,11 +20,7 @@ function hopf(rI,rE,p::WCParams)
     τ = J11 + J22
     Δ = J11 * J22 - J12 * J21
 
-    if τ>0 && Δ>0
-        return true
-    else
-        return false
-    end
+    return τ > 0 && Δ > 0
 end
 
 function full_check(p::WCParams)

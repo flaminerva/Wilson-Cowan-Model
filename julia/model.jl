@@ -45,7 +45,7 @@ function rhs(rI, p::WCParams)
     cI = correct(p.aI,p.θI)
     cE = correct(p.aE,p.θE)
     β = p.aI * (rI+cI) * (1.0-rI-cI)
-    rE = null(rI,p)
+    rE = I_null(rI,p)
     α = p.aE * (rE+cE) * (1.0-rE-cE)
     R = p.τE/p.τI * ((1 + p.wII * β)^2) / (α * β)
     return R
