@@ -3,6 +3,8 @@
 Analytical conditions for limit-cycle oscillation via Poincaré-Bendixson, with application to the Neuromatch Academy
 (NMA) and Li et al. (2022) parameter sets.
 
+We work with the simplified ODE formulation used in the NMA curriculum, which omits the refractory term $(1-r_E)$ and the integral formulation of the original Wilson-Cowan (1972) model.
+
 ## Summary
 Based on the initial question: Why the parameters of NMA can't produce oscillations?
 we derive a structural necessary condition for oscillation:
