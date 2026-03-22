@@ -1,11 +1,10 @@
 # Conditions for Oscillation in the Wilson-Cowan Model
 
-Analytical conditions for Hopf bifurcation in the Wilson-Cowan
-neural population model, with application to the Neuromatch Academy
+Analytical conditions for limit-cycle oscillation via Poincaré-Bendixson, with application to the Neuromatch Academy
 (NMA) and Li et al. (2022) parameter sets.
 
 ## Summary
-Based on the initial question: Why the paramters of NMA can't produce oscillations?
+Based on the initial question: Why the parameters of NMA can't produce oscillations?
 we derive a structural necessary condition for oscillation:
 
 $$w_{EI}w_{IE} > \frac{16\,\tau_E\,w_{II}}{\tau_I\,a_E}$$
@@ -15,13 +14,7 @@ regardless of external input or fixed-point tuning. The NMA
 parameters violate it ($52 < 73.3$); the Li et al. parameters
 satisfy it with wide margin ($520 \gg 32$).
 
-We develop a three-level verification framework**:
-1. **Structural** — can the network support oscillation at all?
-2. **Window existence** — does a feasibility window remain open
-   at the realised fixed point?
-3. **Operating point in window** — does the actual $w_{EE}F'_E$
-   fall between the trace lower bound and the determinant upper
-   bound?
+We develop a three-level verification framework to characterise the oscillatory regime.
 
 By coupling the sigmoid derivatives along the I-nullcline, we
 tighten the structural bound and show the decoupled optimum is

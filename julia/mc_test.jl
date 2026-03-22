@@ -8,7 +8,7 @@ using .WCModel: WCParams, sig, sigd, sigdr, I_null, rhs, fIext_E, correct
 
 Random.seed!(42)
 
-function hopf(rI,rE,p::WCParams)
+function pbc(rI,rE,p::WCParams)
     "τ > 0 and Δ > 0"
     FdE = sigdr(rE,p.aE,p.θE)
     FdI = sigdr(rI,p.aI,p.θI)
@@ -38,7 +38,7 @@ function full_check(p::WCParams)
         return false
     end
 
-    h = hopf.(rIval,rE,Ref(p))
+    h = pbc.(rIval,rE,Ref(p))
     dI = diff(Iext)
     foldin = findall(i -> dI[i]*dI[i+1]<0, 1:length(dI)-1)
 
